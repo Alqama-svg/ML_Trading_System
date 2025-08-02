@@ -3,8 +3,10 @@ import os
 import pandas as pd
 import numpy as np
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Paths to trained models
-MODEL_DIR = 'trained_models'
+MODEL_DIR = os.path.join(SCRIPT_DIR, '..', 'trained_models')
 LGBM_MODEL_PATH = os.path.join(MODEL_DIR, 'lgbm_trading_model.pkl')
 SCALER_PATH = os.path.join(MODEL_DIR, 'scaler.pkl')
 
@@ -37,10 +39,10 @@ def get_ml_prediction(features_df):
     if features_df is None or features_df.empty:
         return None, None
 
-    # Scale the single data point using the *fitted* scaler
+    # Scaling the single data point using the *fitted* scaler
     scaled_features = scaler.transform(features_df)
     
-    # Predict using the model
+    # Prediction using the model
     prediction = lgbm_model.predict(scaled_features)[0]
     prediction_proba = lgbm_model.predict_proba(scaled_features)[0, 1]
 
