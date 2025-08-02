@@ -4,3 +4,4 @@ scikit-learn
 yfinance
 requests
 streamlit
+matplotlib
