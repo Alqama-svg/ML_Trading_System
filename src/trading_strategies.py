@@ -809,4 +809,8 @@ class RiskManagement:
         # Find peak before max drawdown
         peak_idx = running_max.loc[:max_drawdown_idx].idxmax()
         
+<<<<<<< HEAD
         return max_drawdown, peak_idx, max_drawdown_idx
+=======
+        return max_drawdown, peak_idx, max_drawdown_idx
+>>>>>>> f1909685739746bbe77927120694a7980b73754a

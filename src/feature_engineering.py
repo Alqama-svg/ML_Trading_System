@@ -434,4 +434,8 @@ class FeatureSelector:
         
         selected_features = [col for col in X.columns if col not in features_to_remove]
         
+<<<<<<< HEAD
         return selected_features
+=======
+        return selected_features
+>>>>>>> f1909685739746bbe77927120694a7980b73754a

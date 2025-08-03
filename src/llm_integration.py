@@ -833,4 +833,8 @@ def format_market_data_for_llm(market_data):
         else:
             formatted[key] = str(value)
     
+<<<<<<< HEAD
     return formatted
+=======
+    return formatted
+>>>>>>> f1909685739746bbe77927120694a7980b73754a

@@ -500,4 +500,8 @@ class DynamicRiskAdjustment:
         Returns:
             float: Adjusted position size multiplier
         """
+<<<<<<< HEAD
         base_size = signal_strength
+=======
+        base_size = signal_strength
+>>>>>>> f1909685739746bbe77927120694a7980b73754a

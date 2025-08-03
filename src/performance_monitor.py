@@ -744,4 +744,8 @@ def calculate_tail_ratios(returns):
         'tail_ratio_99_1': abs(p99 / p1) if p1 != 0 else np.inf,
         'right_tail_mean': returns[returns > p95].mean(),
         'left_tail_mean': returns[returns < p5].mean()
+<<<<<<< HEAD
     }
+=======
+    }
+>>>>>>> f1909685739746bbe77927120694a7980b73754a
