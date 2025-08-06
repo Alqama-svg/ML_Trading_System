@@ -330,8 +330,4 @@ def main():
     st.markdown("**ML-Powered Trading System** - Advanced algorithmic trading with machine learning integration")
 
 if __name__ == "__main__":
-<<<<<<< HEAD
     main()
-=======
-    main()
->>>>>>> f1909685739746bbe77927120694a7980b73754a
