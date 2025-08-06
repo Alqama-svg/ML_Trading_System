@@ -11,13 +11,6 @@ import pickle
 from pathlib import Path
 import time
 
-try:
-    from src.feature_calculator import compute_realtime_features
-    from src.model_inference import load_ml_models, get_ml_prediction
-    from src.strategy_executor import execute_trading_strategy, get_current_portfolio_value, get_portfolio_history, reset_portfolio
-    from src.llm_integration import generate_market_commentary
-    from src.data_utils import mock_realtime_data_feed, initialize_data_buffer, data_buffer, FEATURES
-
 except ImportError as e:
     st.error(f"Module import error: {e}. Please ensure src/ modules are correct.")
     st.stop()
