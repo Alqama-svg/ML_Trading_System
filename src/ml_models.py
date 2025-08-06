@@ -28,12 +28,9 @@ class MLTradingModels:
         self.feature_columns = []
         
     def prepare_training_data(self, data, target_column='target'):
-<<<<<<< HEAD
         """
         Prepare training data with proper labels
         """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
         if data is None or data.empty:
             raise ValueError("No data provided for training")
             
@@ -126,12 +123,9 @@ class MLTradingModels:
         return model_scores
     
     def predict(self, features):
-<<<<<<< HEAD
         """
         Make predictions using the best model
         """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
         if not self.is_trained:
             # Return random prediction if not trained
             return {
@@ -177,12 +171,9 @@ class MLTradingModels:
             }
     
     def save_models(self, filepath='models/'):
-<<<<<<< HEAD
         """
         Save trained models to disk
         """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
         os.makedirs(filepath, exist_ok=True)
         
         model_data = {
@@ -199,12 +190,9 @@ class MLTradingModels:
         print(f"Models saved to {filepath}/trading_models.pkl")
     
     def load_models(self, filepath='models/trading_models.pkl'):
-<<<<<<< HEAD
         """
         Load trained models from disk
         """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
         try:
             with open(filepath, 'rb') as f:
                 model_data = pickle.load(f)
@@ -227,24 +215,18 @@ class MLTradingModels:
             return False
 
 class TimeSeriesForecaster:
-<<<<<<< HEAD
     """
     Time series forecasting for price prediction
     """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
     def __init__(self, window_size=60):
         self.window_size = window_size
         self.model = None
         self.scaler = StandardScaler()
         
     def create_sequences(self, data, target_col='Close'):
-<<<<<<< HEAD
         """
         Create sequences for time series prediction
         """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
         sequences = []
         targets = []
         
@@ -255,12 +237,9 @@ class TimeSeriesForecaster:
         return np.array(sequences), np.array(targets)
     
     def train(self, price_data):
-<<<<<<< HEAD
         """
         Train time series model (simplified version)
         """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
         # Normalize data
         scaled_data = self.scaler.fit_transform(price_data.reshape(-1, 1)).flatten()
         
@@ -282,12 +261,9 @@ class TimeSeriesForecaster:
         return self.model.score(X_flat, y)
     
     def predict_next(self, recent_data):
-<<<<<<< HEAD
         """
         Predict next price
         """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
         if self.model is None:
             return None
             
@@ -309,12 +285,9 @@ class TimeSeriesForecaster:
         return prediction
 
 class ReinforcementLearningTrader:
-<<<<<<< HEAD
     """
     Simple RL trader implementation
     """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
     def __init__(self, initial_balance=10000):
         self.balance = initial_balance
         self.positions = 0
@@ -334,12 +307,9 @@ class ReinforcementLearningTrader:
         return tuple(np.round(features, 2))
     
     def get_action(self, state):
-<<<<<<< HEAD
         """
         Get action using epsilon-greedy policy
         """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
         if np.random.random() < self.epsilon:
             return np.random.choice(self.action_space)
         
@@ -349,12 +319,9 @@ class ReinforcementLearningTrader:
         return max(self.q_table[state], key=self.q_table[state].get)
     
     def update_q_table(self, state, action, reward, next_state):
-<<<<<<< HEAD
         """
         Update Q-table using Q-learning
         """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
         if state not in self.q_table:
             self.q_table[state] = {action: 0 for action in self.action_space}
         
@@ -368,12 +335,9 @@ class ReinforcementLearningTrader:
         self.q_table[state][action] = new_q
 
 def validate_model(model, X_test, y_test):
-<<<<<<< HEAD
     """
     Model validation with various metrics
     """
-=======
->>>>>>> f1909685739746bbe77927120694a7980b73754a
     predictions = model.predict(X_test)
     
     accuracy = accuracy_score(y_test, predictions)
@@ -382,8 +346,4 @@ def validate_model(model, X_test, y_test):
     return {
         'accuracy': accuracy,
         'classification_report': report
-<<<<<<< HEAD
     }
-=======
-    }
->>>>>>> f1909685739746bbe77927120694a7980b73754a
