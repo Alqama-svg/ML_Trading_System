@@ -5,7 +5,6 @@ Advanced technical indicators and features for ML models
 
 import pandas as pd
 import numpy as np
-import talib
 from scipy import stats
 import warnings
 warnings.filterwarnings('ignore')
