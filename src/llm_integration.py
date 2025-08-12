@@ -6,6 +6,7 @@ LLM Integration for Trading System
 • Market commentary generation
 """
 
+import streamlit as st
 import json
 import pandas as pd
 import numpy as np
@@ -29,7 +30,7 @@ class LLMAssistant:
         if self.api_key:
             gemini.api_key = self.api_key
         else:
-            print("Warning: OpenAI API key not provided. LLM features will use mock responses.")
+            print("Warning: Gemini API key not provided. LLM features will use mock responses.")
         
         self.conversation_history = []
         
