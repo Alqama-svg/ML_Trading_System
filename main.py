@@ -1,12 +1,19 @@
-import streamlit as st
+import os
 import pandas as pd
 import numpy as np
+import streamlit as st
 import yfinance as yf
 import plotly.graph_objects as go
 import plotly.express as px
 from datetime import datetime, timedelta
-import warnings
-import os
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+import requests
+import json
+import asyncio
 import pickle
 from pathlib import Path
 import time
@@ -78,6 +85,68 @@ try:
 except ImportError as e:
     st.error(f"Module import error: {e}. Creating basic functionality...")
 
+class LLMIntegration:
+    def __init__(self):
+        self.gemini_api_key = st.secrets.get("api_keys", {}).get("GEMINI", "")
+        self.alpha_vantage_key = st.secrets.get("api_keys", {}).get("ALPHA_VANTAGE", "")
+        
+    def get_market_commentary(self, symbol, current_price, prediction, technical_data):
+        """Generate market commentary using Gemini API"""
+        if not self.gemini_api_key:
+            return "API key not configured for market commentary."
+            
+        try:
+            # Prepare market context
+            market_context = f"""
+            Stock: {symbol}
+            Current Price: ${current_price:.2f}
+            ML Prediction: ${prediction:.2f}
+            Change: {((prediction - current_price) / current_price * 100):.2f}%
+            
+            Technical Indicators:
+            - RSI: {technical_data.get('RSI', 'N/A')}
+            - MACD Signal: {technical_data.get('MACD_Signal', 'N/A')}
+            - Volume Ratio: {technical_data.get('Volume_Ratio', 'N/A')}
+            """
+            
+            prompt = f"""
+            As a professional financial analyst, provide a concise market commentary for {symbol} based on this data:
+            
+            {market_context}
+            
+            Please provide:
+            1. Brief market outlook (2-3 sentences)
+            2. Key technical signals
+            3. Risk assessment
+            4. Trading recommendation (Buy/Hold/Sell)
+            
+            Keep it professional and under 200 words.
+            """
+            
+            # Make API call to Gemini
+            response = requests.post(
+                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={self.gemini_api_key}",
+                headers={'Content-Type': 'application/json'},
+                json={
+                    "contents": [{
+                        "parts": [{
+                            "text": prompt
+                        }]
+                    }]
+                },
+                timeout=30
+            )
+            
+            if response.status_code == 200:
+                result = response.json()
+                if 'candidates' in result and len(result['candidates']) > 0:
+                    return result['candidates'][0]['content']['parts'][0]['text']
+            
+            return "Unable to generate market commentary at this time."
+            
+        except Exception as e:
+            return f"Commentary generation error: {str(e)}"
+
 class MLTradingSystem:
     def __init__(self):
         self.initialize_system()
@@ -122,7 +191,6 @@ class MLTradingSystem:
         """Create features for ML model"""
         if data is None or data.empty:
             return pd.DataFrame()
-        
         df = data.copy()
         
         # Technical indicators
