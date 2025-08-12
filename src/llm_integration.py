@@ -6,7 +6,6 @@ LLM Integration for Trading System
 • Market commentary generation
 """
 
-import openai
 import json
 import pandas as pd
 import numpy as np
@@ -15,17 +14,20 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
+API_KEY = st.secrets.get("api_keys", {}).get("GEMINI")
+API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key="
+
 class LLMAssistant:
     def __init__(self, api_key=None):
         """
         Initialize LLM Assistant
         
         Args:
-            api_key: OpenAI API key (can be set via environment variable)
+            api_key: Gemini API key (can be set via environment variable)
         """
-        self.api_key = api_key or os.getenv('OPENAI_API_KEY')
+        self.api_key = api_key or os.getenv('GEMINI_API_KEY')
         if self.api_key:
-            openai.api_key = self.api_key
+            gemini.api_key = self.api_key
         else:
             print("Warning: OpenAI API key not provided. LLM features will use mock responses.")
         
@@ -59,7 +61,7 @@ class LLMAssistant:
             """
             
             if self.api_key:
-                response = self._call_openai_api(prompt, max_tokens=500)
+                response = self._call_gemini_api(prompt, max_tokens=500)
                 return response
             else:
                 return self._generate_mock_commentary(market_data)
@@ -96,7 +98,7 @@ class LLMAssistant:
             """
             
             if self.api_key:
-                response = self._call_openai_api(prompt, max_tokens=800)
+                response = self._call_gemini_api(prompt, max_tokens=800)
                 return self._parse_strategy_response(response)
             else:
                 return self._generate_mock_strategies(market_conditions, risk_tolerance)
@@ -132,7 +134,7 @@ class LLMAssistant:
             """
             
             if self.api_key:
-                response = self._call_openai_api(prompt, max_tokens=600)
+                response = self._call_gemini_api(prompt, max_tokens=600)
                 return response
             else:
                 return self._generate_mock_code_review()
@@ -171,7 +173,7 @@ class LLMAssistant:
             """
             
             if self.api_key:
-                response = self._call_openai_api(prompt, max_tokens=1000)
+                response = self._call_gemini_api(prompt, max_tokens=1000)
                 return response
             else:
                 return self._generate_mock_documentation(strategy_name)
@@ -214,7 +216,7 @@ class LLMAssistant:
             """
             
             if self.api_key:
-                response = self._call_openai_api(prompt, max_tokens=400)
+                response = self._call_gemini_api(prompt, max_tokens=400)
                 return response
             else:
                 return self._generate_mock_regime_analysis(trend_direction, vol_regime)
@@ -223,10 +225,10 @@ class LLMAssistant:
             print(f"Error analyzing market regime: {e}")
             return self._generate_mock_regime_analysis("sideways", "normal")
     
-    def _call_openai_api(self, prompt, max_tokens=500, temperature=0.7):
-        """Call OpenAI API with error handling"""
+    def _call_gemini_api(self, prompt, max_tokens=500, temperature=0.7):
+        """Call Gemini API with error handling"""
         try:
-            response = openai.ChatCompletion.create(
+            response = gemini.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "You are a professional quantitative trading analyst with expertise in financial markets, technical analysis, and algorithmic trading strategies."},
@@ -237,7 +239,7 @@ class LLMAssistant:
             )
             return response.choices[0].message.content.strip()
         except Exception as e:
-            print(f"OpenAI API error: {e}")
+            print(f"Gemini API error: {e}")
             return "API call failed. Using fallback response."
     
     def _prepare_market_context(self, market_data, technical_indicators, news_sentiment):
@@ -560,7 +562,7 @@ class AutomatedReporting:
         Provide actionable insights for strategy optimization.
         """
         
-        return self.llm._call_openai_api(report_prompt, max_tokens=1000)
+        return self.llm._call_gemini_api(report_prompt, max_tokens=1000)
 
 class LLMBacktestAnalyzer:
     """
@@ -598,7 +600,7 @@ class LLMBacktestAnalyzer:
         Focus on practical insights for strategy deployment.
         """
         
-        return self.llm._call_openai_api(analysis_prompt, max_tokens=800)
+        return self.llm._call_gemini_api(analysis_prompt, max_tokens=800)
     
     def identify_performance_drivers(self, equity_curve, trade_analysis):
         """
@@ -628,7 +630,7 @@ class LLMBacktestAnalyzer:
         Provide actionable insights for optimization.
         """
         
-        return self.llm._call_openai_api(driver_prompt, max_tokens=600)
+        return self.llm._call_gemini_api(driver_prompt, max_tokens=600)
 
 class MarketNewsAnalyzer:
     """
@@ -690,7 +692,7 @@ class MarketNewsAnalyzer:
         Format as JSON for easy parsing.
         """
         
-        response = self.llm._call_openai_api(sentiment_prompt, max_tokens=400)
+        response = self.llm._call_gemini_api(sentiment_prompt, max_tokens=400)
         return self._parse_sentiment_response(response)
     
     def _parse_sentiment_response(self, response):
@@ -747,7 +749,7 @@ class StrategyOptimizer:
         Focus on robust, out-of-sample improvements.
         """
         
-        return self.llm._call_openai_api(optimization_prompt, max_tokens=600)
+        return self.llm._call_gemini_api(optimization_prompt, max_tokens=600)
     
     def analyze_parameter_sensitivity(self, param_sweep_results):
         """
@@ -772,7 +774,7 @@ class StrategyOptimizer:
         Provide guidance for robust parameter selection.
         """
         
-        return self.llm._call_openai_api(sensitivity_prompt, max_tokens=500)
+        return self.llm._call_gemini_api(sensitivity_prompt, max_tokens=500)
 
 # Utility functions for LLM integration
 
