@@ -16,7 +16,6 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
-API_KEY = st.secrets.get("api_keys", {}).get("GEMINI")
 API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key="
 
 class LLMAssistant:
@@ -44,6 +43,7 @@ class LLMAssistant:
             technical_indicators: Dictionary of technical indicator values
             news_sentiment: Current news sentiment score
         """
+        API_KEY = st.secrets.get("api_keys", {}).get("GEMINI")
         try:
             # Prepare context
             context = self._prepare_market_context(market_data, technical_indicators, news_sentiment)
