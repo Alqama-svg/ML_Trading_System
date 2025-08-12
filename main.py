@@ -79,7 +79,7 @@ try:
     from src.ml_models import MLTradingModels
     from src.feature_engineering import create_features
     from src.trading_strategies import AdvancedStrategies
-    from src.llm_integration import LLMAssistant
+    from src.llm_integration import generate_market_commentary
     from src.risk_management import RiskManager
     from src.performance_monitor import calculate_metrics
 except ImportError as e:
