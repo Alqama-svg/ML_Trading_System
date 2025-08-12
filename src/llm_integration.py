@@ -6,11 +6,12 @@ LLM Integration for Trading System
 • Market commentary generation
 """
 
-import streamlit as st
+import requests
 import json
 import pandas as pd
 import numpy as np
 from datetime import datetime
+import streamlit as st
 import os
 import warnings
 warnings.filterwarnings('ignore')
