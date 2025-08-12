@@ -16,7 +16,6 @@ import json
 import asyncio
 import pickle
 from pathlib import Path
-import time
 
 try:
     import warnings
