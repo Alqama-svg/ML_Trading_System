@@ -12,11 +12,10 @@ from pathlib import Path
 import time
 
 try:
-    except ImportError as e:
-    st.error(f"Module import error: {e}. Please ensure src/ modules are correct.")
-    st.stop()
-
-warnings.filterwarnings('ignore')
+    import warnings
+    warnings.filterwarnings('ignore')
+except ImportError as e:
+    st.warning(f"Warning: Could not import warnings module: {e}")
 
 # Create necessary directories
 os.makedirs('models', exist_ok=True)
